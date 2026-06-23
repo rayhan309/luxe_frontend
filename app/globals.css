@@ -1,26 +1,232 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* ─── CSS Variables ─────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --black: #0A0A0A;
+  --white: #FAFAFA;
+  --gold: #C9A96E;
+  --gold-light: #D9BC8C;
+  --gold-dark: #A8854A;
+  --gray-50: #F9F9F9;
+  --gray-100: #F0F0F0;
+  --gray-200: #E0E0E0;
+  --gray-300: #C0C0C0;
+  --gray-500: #757575;
+  --gray-700: #424242;
+  --muted: #6B6B6B;
+  --radius: 0px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Reset & Base ──────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--black);
+  background-color: var(--white);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ─── Typography ────────────────────────────────────── */
+.font-display {
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+}
+
+.text-gold { color: var(--gold); }
+.text-muted { color: var(--muted); }
+
+/* ─── Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--gray-50);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500);
+}
+
+/* ─── Selection ─────────────────────────────────────── */
+::selection {
+  background: var(--gold);
+  color: var(--white);
+}
+
+/* ─── Links ─────────────────────────────────────────── */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ─── Images ────────────────────────────────────────── */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ─── Luxury Utilities ──────────────────────────────── */
+.luxury-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--gray-300);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.luxury-divider::before,
+.luxury-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gray-200);
+}
+
+.section-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* ─── Animations ────────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--gray-100) 25%,
+    var(--gray-50) 50%,
+    var(--gray-100) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ─── Gold Shimmer Effect ───────────────────────────── */
+.gold-shimmer {
+  background: linear-gradient(
+    135deg,
+    var(--gold-dark) 0%,
+    var(--gold) 50%,
+    var(--gold-dark) 100%
+  );
+  background-size: 200% 200%;
+  animation: goldShimmer 3s ease infinite;
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ─── Swiper Overrides ──────────────────────────────── */
+.swiper-pagination-bullet {
+  background: var(--gray-300);
+  opacity: 1;
+  border-radius: 0;
+  width: 20px;
+  height: 2px;
+}
+.swiper-pagination-bullet-active {
+  background: var(--gold);
+  width: 40px;
+}
+
+/* ─── Page Transition ───────────────────────────────── */
+.page-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* ─── Cart Badge ────────────────────────────────────── */
+.cart-badge-pulse {
+  animation: pulse 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* ─── Product Image Zoom ────────────────────────────── */
+.image-zoom-container {
+  overflow: hidden;
+}
+.image-zoom-container img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.image-zoom-container:hover img {
+  transform: scale(1.06);
+}
+
+/* ─── Focus Styles ──────────────────────────────────── */
+:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ─── Responsive Containers ─────────────────────────── */
+.container-luxe {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+@media (min-width: 768px) {
+  .container-luxe { padding: 0 48px; }
+}
+@media (min-width: 1200px) {
+  .container-luxe { padding: 0 80px; }
 }
